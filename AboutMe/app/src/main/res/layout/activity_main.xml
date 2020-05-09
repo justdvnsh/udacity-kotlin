@@ -4,6 +4,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="myName"
+            type="com.divyansh.aboutme.MyName"
+            />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -15,7 +22,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:padding="@dimen/padding_text"
-            android:text="@string/divyansh_dwivedi"
+            android:text="@={myName.myName}"
             android:textAlignment="center" />
 
         <EditText
@@ -49,6 +56,7 @@
             style="@style/textStyle"
             android:textAlignment="center"
             android:visibility="gone"
+            android:text="@={myName.nickname}"
             />
 
         <ImageView
