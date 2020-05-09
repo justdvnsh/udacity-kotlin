@@ -4,11 +4,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
-import android.widget.TextView
-import android.widget.Toast
 import java.util.*
 
 class MainActivity : AppCompatActivity() {
+
+    lateinit var diceImageView: ImageView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -18,10 +18,11 @@ class MainActivity : AppCompatActivity() {
         rollBtn.setOnClickListener {
             rollDice()
         }
+
+        diceImageView = findViewById(R.id.diceImage)
     }
 
     private fun rollDice() {
-        val diceImage: ImageView = findViewById(R.id.diceImage)
         val randomInt = Random().nextInt(6) + 1
         val drawableResource = when (randomInt) {
             1 -> R.drawable.dice_1
@@ -31,7 +32,7 @@ class MainActivity : AppCompatActivity() {
             5 -> R.drawable.dice_5
             else -> R.drawable.dice_6
         }
-        diceImage.setImageResource(drawableResource)
+        diceImageView.setImageResource(drawableResource)
     }
 
 }
