@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="name_dimen">22sp</dimen>
+    <dimen name="dimen_top">16dp</dimen>
+    <dimen name="padding_text">16dp</dimen>
+    <dimen name="paddin_bio">10dp</dimen>
+</resources>
