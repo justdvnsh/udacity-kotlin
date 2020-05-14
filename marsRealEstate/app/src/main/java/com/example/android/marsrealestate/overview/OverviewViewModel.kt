@@ -31,6 +31,7 @@ import kotlinx.coroutines.launch
 enum class MarsApiStatus {
     LOADING, ERROR, DONE
 }
+enum class MarsApiFilter(val value: String) { SHOW_RENT("rent"), SHOW_BUY("buy"), SHOW_ALL("all") }
 
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
@@ -67,16 +68,16 @@ class OverviewViewModel : ViewModel() {
      * Call getMarsRealEstateProperties() on init so we can display status immediately.
      */
     init {
-        getMarsRealEstateProperties()
+        getMarsRealEstateProperties(MarsApiFilter.SHOW_ALL)
     }
 
     /**
      * Sets the value of the status LiveData to the Mars API status.
      */
-    private fun getMarsRealEstateProperties() {
+    private fun getMarsRealEstateProperties(filter: MarsApiFilter) {
 
         coroutineJob.launch {
-            val getProperties = MarsApiService.retrofitService.getProperties()
+            val getProperties = MarsApiService.retrofitService.getProperties(filter.value)
             try {
                 _status.value = MarsApiStatus.LOADING
                 val listResult = getProperties.await()
@@ -91,5 +92,9 @@ class OverviewViewModel : ViewModel() {
             }
         }
 
+    }
+
+    fun updateFilter(filter: MarsApiFilter) {
+        getMarsRealEstateProperties(filter)
     }
 }
