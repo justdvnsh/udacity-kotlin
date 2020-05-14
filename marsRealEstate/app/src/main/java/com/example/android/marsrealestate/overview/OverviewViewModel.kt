@@ -23,9 +23,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.example.android.marsrealestate.network.MarsApiService
 import com.example.android.marsrealestate.network.MarsProperty
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.launch
 
 /**
  * The [ViewModel] that is attached to the [OverviewFragment].
@@ -33,11 +34,18 @@ import retrofit2.Response
 class OverviewViewModel : ViewModel() {
 
     // The internal MutableLiveData String that stores the status of the most recent request
-    private val _response = MutableLiveData<String>()
+    private val _status = MutableLiveData<String>()
 
     // The external immutable LiveData for the request status String
     val response: LiveData<String>
-        get() = _response
+        get() = _status
+
+    private val _properties = MutableLiveData<List<MarsProperty>>()
+    val properties: LiveData<List<MarsProperty>>
+        get() = _properties
+
+    private val viewModelJob = Job()
+    private val coroutineJob = CoroutineScope(viewModelJob + Dispatchers.Main)
 
     /**
      * Call getMarsRealEstateProperties() on init so we can display status immediately.
@@ -51,18 +59,18 @@ class OverviewViewModel : ViewModel() {
      */
     private fun getMarsRealEstateProperties() {
 
-        MarsApiService.retrofitService.getProperties().enqueue(object : Callback<List<MarsProperty>> {
-
-            override fun onFailure(call: Call<List<MarsProperty>>, t: Throwable) {
-                Log.i("OverVIewModel", t.message)
-            }
-
-            override fun onResponse(call: Call<List<MarsProperty>>, response: Response<List<MarsProperty>>) {
-                if (response.isSuccessful) {
-                    _response.value = response.body()?.size.toString()
+        coroutineJob.launch {
+            val getProperties = MarsApiService.retrofitService.getProperties()
+            try {
+                val listResult = getProperties.await()
+                _status.value = listResult.size.toString()
+                if (listResult.size > 0) {
+                    _properties.value = listResult
                 }
+            } catch (e: Exception) {
+                Log.i("OverVIewModel", e.message)
             }
-        })
-//        _response.value = "Set the Mars API Response here!"
+        }
+
     }
 }
