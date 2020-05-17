@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "978225082814",
+    "firebase_url": "https://udacity-kotlin-android.firebaseio.com",
+    "project_id": "udacity-kotlin-android",
+    "storage_bucket": "udacity-kotlin-android.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:978225082814:android:2bb3449a35dba26d5989ef",
+        "android_client_info": {
+          "package_name": "com.example.android.firebaseui_login_sample"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "978225082814-9r4r7utobvec3knhk5ea52e85t7ed23j.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDJXG-j7NVbHoy5EszfVFpRPs8JUl8xn1c"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "978225082814-9r4r7utobvec3knhk5ea52e85t7ed23j.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
